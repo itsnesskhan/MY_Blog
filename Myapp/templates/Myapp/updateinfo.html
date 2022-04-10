@@ -1,0 +1,43 @@
+{% extends 'Myapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-12" >
+    {% if profile %}
+    {% for pro in profile %}
+        
+        <div class="card mb-3 mt-3 bg-light" >
+            <div class="row g-0">
+            <div class="col-md-3">
+                <img class="rounded-circle m-2" src="{{pro.image.url}}" alt="Image Not Found..." width="200px" height="200px">
+            </div>
+            <div class="col-md-9"><!---sometimes give margin can spoil grid system-->
+                <div class="card-body">
+                <h5 class="card-title m-0">@{{request.user}}</h5>
+
+                <small class="text-muted">Social Media Links<br>
+                    <a href="#">Facebook |</a>
+                    <a href="#">Instagram |</a>
+                    <a href="#">Gmail</a>
+                </small> <br><hr>
+                <h4 class="card-title m-0">{{ request.user.get_full_name}}</h4>
+                <span class="card-text ">Location : {{ pro.city}}</span>
+                <p class=" small card-text ">Total Post: {{ blog.count}}</p>
+                <p class="card-text"><small class="text-muted">last post date : {{ lastpost.date | date:"F d, Y"}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% endif %}
+<div class="ul segment card p-2" >
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Profile Info</h2>
+
+    {{ u_form | crispy }}
+    {{ p_form | crispy }}
+    <input type="submit" name="" id="" class="btn btn-outline-success" value="Update">
+</form>
+</div>    
+</div>
+{% endblock content %}

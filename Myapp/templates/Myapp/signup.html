@@ -1,0 +1,54 @@
+{% extends 'Myapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block msg %}
+{% if messages %}
+    {% for msg in messages %}
+        <div {% if msg.tags %} class="alert alert-{{msg.tags }} fade show" {% endif %}>
+            <strong>{{msg}}</strong>    
+        </div>
+    {% endfor %}
+
+{% endif %}
+{% endblock msg %}
+{% block content %}
+<div class="col-4 login">
+    <div  style="background-color: white;" >
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            <h1 class=" text-center p-2">Create an Account</h1>
+            <div class="form-group col-12 mb-0">
+                {{ form.username | as_crispy_field }}
+            </div>
+            <div class="form-group col-12 mb-0">
+                {{ form.first_name | as_crispy_field }}
+            </div>
+            
+            <div class="form-group col-12 mb-0">
+                {{ form.last_name | as_crispy_field }}
+            </div>
+            
+            <div class="form-group col-12 mb-0">
+                {{ form.password1 | as_crispy_field }}
+            </div>
+            
+            <div class="form-group col-12 mb-0">
+                {{ form.password2 | as_crispy_field }}
+            </div>
+            
+            <div class="form-group col-12">
+                <input type="submit" value="Register" class="btn btn-success rounded-0 mb-3">
+     
+            </div>
+            
+            </form>
+    
+    </div>
+            <div class=" text-center mb-2">
+            Already have an Account 
+                <a href="{% url 'loginpage' %}" class="btn btn-outline-info rounded-0">Login</a>
+ 
+            </div>
+</div>
+        
+
+{% endblock content %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base File</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Myapp/css/bootstrap.css' %}">
+    <link href=
+    "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" 
+        rel="stylesheet" />
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'Myapp/css/styles.css' %}">
+    <style>
+        div.alert-block ul.m-0 li{
+    /*display: none;/*if you dont want cripsy error to show ,write this */
+    list-style: none;
+    margin: 0%;
+    color:#dc3545;
+    border: 1px solid transparent;
+    background-color:white;
+}
+    div.alert-danger{
+        background-color: white;
+    }
+    #id_content label{
+        display: none;
+    }
+
+.login{
+
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+
+}
+
+
+    </style>
+    
+</head>
+<body style="background-color: lightgoldenrodyellow;">
+    <div class="container-fluid bg-primary">
+        {% include 'Myapp/navbar.html' %}
+    </div>
+    <div class= "container mt-3">
+        <div class="row">
+            <div class="col-12">
+                {% block msg %}
+                {% endblock msg %}
+            </div>
+        </div>    
+
+        <div  class="row">
+            {% block side %}
+            {% endblock side %}
+
+            {% block content %}
+            {% endblock content %}
+        </div>    
+    </div>
+
+    <script src="{% static 'Myapp/js/jquery.js'%}"></script>
+    <script src="{% static 'Myapp/js/popper.js'%}"></script>
+    <script src="{% static 'Myapp/js/bootstrap.js'%}"></script>
+    
+
+</body>
+</html>

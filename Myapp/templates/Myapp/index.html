@@ -1,0 +1,60 @@
+{% extends 'Myapp/base.html' %}
+{% block side %}
+<div class="col-3  ">
+  {% if request.user.is_authenticated %}
+    <div class="ui segment " >
+      <img src="{{ request.user.profile.image.url }}"  width="150px" height="150px" class="card rounded-circle p-2 m-auto  " alt="...">
+      <div class="card-body">
+        <h5 class="card-title text-center">{{ request.user.get_full_name }}</h5>
+        <p class="card-text text-muted">
+
+          <a href="#">Instagram |</a>
+          <a href="#">Facebook |</a>
+          <a href="#">Gmail</a>
+        </p> 
+      </div>
+      <ul class="list-group list-group-flush">
+        <a href="{% url 'profile'%}"><li class="list-group-item">Profile</li></a>
+        <a href="{% url 'logoutpage'%}"><li class="list-group-item">Log Out</li></a>
+      </ul>
+      <div class="card-body">
+        <a href="{% url 'addblogpage' %}" class="card-link">Add Blog</a>
+      </div>
+      {% endif %}
+    </div>
+</div>
+{% endblock side %}
+{% block content %}
+<div class="col-9 ">
+    {% if blog %}
+        {% for bg in blog %}
+                <div class=" ui segment p-2 mb-2  bg-light" >
+                    <div class="row g-0">
+                      <div class="col-md-2 ">
+                        <img class="rounded-circle  p-2 m-2" src="{{bg.author.profile.image.url}}" alt="Image Not Found..." width="150px" height="150px">
+                      </div>
+                      <div class="col-md-10"><!---sometimes give margin can spoil grid system-->
+                        <div class="card-body">
+                          <strong class="card-title font-weight-bold ">@{{ bg.author}}</strong>
+                          {% if bg.author.id  == request.user.id %}
+                            <a href="{% url 'updateblogpage' bg.id %}" class="btn btn-outline-secondary rounded-0 ml-1 float-right">Update</a>
+                            <a href="{% url 'deleteblogpage' bg.id %}" class="btn btn-outline-danger rounded-0 float-right">Delete</a></br><hr>
+                          {% else %} 
+                          </br> 
+                          <hr>
+                          {% endif %}
+                          <span class="card-text font-weight-bold"> Post Title :<a href="{% url 'blogdetails' bg.id %}">{{ bg.title}}</a> </span>
+                          
+                          <p class=" small card-text ">{{ bg.desc}}as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small class="text-muted">posting date {{ bg.date | date:"F d, Y"}}</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        {% endfor %}
+    {% else %}
+            <p>No Blogs to Show</p>
+    {% endif %}        
+</div>
+{% endblock content %}
++

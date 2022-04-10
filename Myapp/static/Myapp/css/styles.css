@@ -1,0 +1,42 @@
+body{
+    background: lightgoldenrodyellow;
+}
+
+.mystyle{
+    background-color: white;
+}
+
+
+.success{
+    background-color:green;
+}
+div.alert-block ul.m-0 li{
+    /*display: none;/*if you dont want cripsy error to show ,write this */
+    list-style: none;
+    margin: 0%;
+    color:#dc3545;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    background-color:white;
+}
+.navbar-brand, .nav-link{
+    color:white;
+
+}
+.nav-link:hover ,.navbar-brand:hover{
+    background-color:indigo;
+    color:greenyellow;
+    text-decoration:none;
+    border-radius: 8px;
+    font-weight: bold;
+    }
+.xyz{
+    font-weight: bold;
+    background-color: rgba(68, 68, 219, 0.568);
+}
+
+.bg{
+    color:crimson;
+    background-color: darkgoldenrod;
+    font-family: 'Times New Roman', Times, serif;
+}

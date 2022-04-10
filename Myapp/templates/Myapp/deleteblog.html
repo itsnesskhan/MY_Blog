@@ -1,0 +1,21 @@
+{% extends 'Myapp/base.html' %}
+{% block content %}
+<div class="col-8 m-auto ">
+    {% if request.user.is_authenticated %}
+        {% for bg in blog %}
+            {% if bg.author.id == request.user.id %}
+                <form action="" method="post" class="p-1 border border-info" novalidate>
+                    <h3 class="text-center p-3" >Are you sure, you want to delete <strong class="text-danger">{{ bg.title}}</strong> ?</h3>
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-outline-danger" value="Yes, Sure">
+                    <a href="{% url 'homepage' %}" class="btn btn-outline-secondary">Cancel</a>
+                </form>  
+            {% else %}
+                <h2 class="text-center">You are not allowed here and you know it</h2> 
+            {% endif %}       
+        {% endfor %} 
+    {% else %}
+        <h2>You are not Authorized</h2>
+    {% endif %}    
+</div>
+{% endblock content %}

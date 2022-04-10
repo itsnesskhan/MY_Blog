@@ -1,0 +1,59 @@
+{% extends 'Myapp/base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="col-12">
+    <div class="ul segment bg-light">
+        {% if blog %}
+
+                    <div class="row g-0">
+                      <div class="col-md-2 ">
+                        <img class="rounded-circle  p-2 m-2" src="{{blog.author.profile.image.url}}" alt="Image Not Found..." width="150px" height="150px">
+                      </div>
+                      <div class="col-md-10"><!---sometimes give margin can spoil grid system-->
+                        <div class="card-body">
+                          <strong class="card-title font-weight-bold ">@{{ blog.author}}</strong>
+                          {% if blog.author.id  == request.user.id %}
+                            <a href="{% url 'updateblogpage' blog.id %}" class="btn btn-outline-secondary rounded-0 ml-1 float-right">Update</a>
+                            <a href="{% url 'deleteblogpage' blog.id %}" class="btn btn-outline-danger rounded-0 float-right">Delete</a></br><hr>
+                          {% else %} 
+                          </br> 
+                          <hr>
+                          {% endif %}
+                          <span class="card-text font-weight-bold"> Post Title : {{ blog.title}}</span>
+                          
+                          <p class=" small card-text ">{{ blog.desc}}as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small class="text-muted">posting date {{ blog.date | date:"F d, Y"}}</small></p>
+                        </div>
+                          {{ total_likes }} Like{{total_likes | pluralize}}
+                        <form action="{% url 'like_post' blog.id %}" method="post">
+                          {% csrf_token %}
+                          {% if is_liked %}
+                            <button type="submit" name="blog_id" class="btn btn-danger btn-sm m-2"  value="{{ blog.id}}">Dislike </button>
+                          {% else %}
+                            <button type="submit" name="blog_id" class="btn btn-primary btn-sm m-2"  value="{{ blog.id}}">Like</button>
+                          {% endif %}
+                        </form><br>
+                        <strong >Post Comments ({{ blog.commments.count }})</strong><br>
+                        {% for cm in  blog.get_comments %}
+                        <img class="rounded-circle m-1" src="{{cm.author.profile.image.url}}" height="35px" width="35px">
+                        <strong class=""">{{cm.author.username}}</strong>
+                        <span class="text-muted">{{cm.created | timesince }} ago</span>
+                        <p class="ml-5">{{cm.content}}</p><br>
+                        {% endfor %}
+                        <form action="" method="post" class="mt-2">
+                          {% csrf_token %}
+                          {{ form }}
+                          <input type="submit" class="btn btn-success rounded-0 btn-sm mt-2 mb-2" value="Submit Comment">
+                        </form>
+                        
+                      </div>
+                    </div>
+                  </div>
+    {% else %}
+            <p>No Blogs to Show</p>
+    {% endif %}        
+
+    </div>
+    <a href="{% url 'homepage' %}" class="btn btn-secondary  p-2">Back</a>
+</div>
+{% endblock content %}

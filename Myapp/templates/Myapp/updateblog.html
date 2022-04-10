@@ -1,0 +1,31 @@
+{% extends 'Myapp/base.html' %}
+{% load crispy_forms_tags %}
+{% block msg %}
+{% if messages %}
+    {% for msg in messages %}
+        <div {% if msg.tags %} class="alert alert-{{msg.tags }} fade show" {% endif %}>
+            <strong>{{msg}}</strong>    
+        </div>
+    {% endfor %}
+
+{% endif %}
+{% endblock msg %}
+{% block content %}
+<div class="col-6 m-auto" style="background-color:white;">
+    {% if request.user.is_authenticated %}
+        {% if blog.author.id == request.user.id %}
+                <form action="" method="post" class="p-1 "  novalidate>
+                    <h2 class=" p-2 text-center m-3 " >Update Blog Information</h2>
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <input type="submit" class="btn btn-secondary rounded-0" value="Udpate Blog">
+                    <a href="{% url 'homepage' %}" class="btn btn-success rounded-0">Cancel</a>
+                </form>
+        {% else %}
+            <h2 class="text-center">You are not allowed here and you know it</h2>
+        {% endif %}        
+{% else %}   
+    <h2 class="text-center">You are not aethorized</h2>
+{% endif %}
+</div>    
+{% endblock content %}

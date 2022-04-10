@@ -1,0 +1,62 @@
+{% extends 'Myapp/base.html' %}
+{% block msg %}
+{% if messages %}
+{% for msg in messages %}
+    <div {% if msg.tags %} class="alert alert-{{msg.tags }} fade show" {% endif %}>
+        <strong>{{msg}}</strong>    
+    </div>
+{% endfor %}
+{% endif %}
+{% endblock msg %}
+{% block content %}
+<div class="col-12">
+    {% if profile %}
+    {% for profile in profile %}
+        <div class="card mb-3 mt-3 bg-light" >
+            <div class="row g-0">
+            <div class="col-md-3">
+                <img class="rounded-circle m-2" src="{{profile.image.url}}" alt="Image Not Found..." width="200px" height="200px">
+            </div>
+            <div class="col-md-9"><!---sometimes give margin can spoil grid system-->
+                <div class="card-body">
+                <h5 class="card-title m-0">@{{profile.author}}</h5>
+
+                <small class="text-muted">Social Media Links<br>
+                    <a href="#">Facebook |</a>
+                    <a href="#">Instagram |</a>
+                    <a href="#">Gmail</a>
+                </small> <br><hr>
+                <h4 class="card-title m-0">{{ profile.author.get_full_name}}</h4>
+                <span class="card-text ">Location : {{ profile.city}}</span>
+                <p class=" small card-text ">Total Post: {{ blog.count}}</p>
+                <p class="card-text"><small class="text-muted">last post date : {{ lastpost.date | date:"F d, Y"}}</small></p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <a href="{% url 'updateinfopage'%}" class="btn btn-warning">Update Profile</a>
+        <a href="{% url 'homepage'%}" class="btn btn-success">Home</a>
+    {% endfor %}
+    {% endif %}
+    {% if blog %}
+        {% for bg in blog %}
+                <div class="card mb-3 mt-3 mystyle"  style="background-color: white;border:none;">
+                    <div class="row g-0">
+                      <div class="col-md-12"><!---sometimes give margin can spoil grid system-->
+                        <div class="card-body">
+                          <span class="card-text font-weight-bold"> Post Title : {{ bg.title}}</span>
+                          <a href="{% url 'updateblogpage' bg.id %}" class="btn btn-outline-secondary ml-1 float-right">Update</a>
+                            <a href="{% url 'deleteblogpage' bg.id %}" class="btn btn-outline-danger   float-right">Delete</a>
+                          <p class=" small card-text ">{{ bg.desc}}as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          <p class="card-text"><small class="text-muted">posting date {{ bg.date | date:"F d, Y"}}</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        {% endfor %}
+    {% else %}
+            <p class="font-weight-bold text-center">No Blogs to Show</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
